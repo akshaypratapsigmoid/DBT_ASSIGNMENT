@@ -40,19 +40,38 @@ Version, Country_code, Country, Item_key, Item_name, year, month, price, user
 {{
   config(
     materialized = 'incremental',
-    incremental_strategy = 'merge',
-    unique_key = ['version', 'country_code', 'item_key', 'year', 'month', 'price', 'user'],
     schema = 'CONS'
     )
-}}
+}}  
 
-with item_prices as (
-select 
-ips.version, cc.country_code, cc.country_name, ips.item_key, ips.item_name, ips.year, ips.month, ips.price, ips.user
-from country_codes as cc
-cross join item_prices_stg as ips
+with Country_code as (
+select * from DBT.STG.COUNTRY_CODES
+) ,
+Global_Item_Prices as (
+    select * from DBT.STG.GLOBAL_ITEM_PRICES
 )
-select * from item_prices
+
+
+select 
+version,
+country_key as country_code,
+country_name as country,
+item_key,
+item_name,
+year,
+month,
+price,
+user,
+case when cc.load_time > ip.load_time then
+cc.load_time
+else
+ip.load_time end
+as load_time
+from Country_code cc , Global_Item_Prices ip
+{% if is_incremental() %}
+where cc.load_time > (select max(load_time) from {{ this }})
+or ip.load_time > (select max(load_time) from {{ this }})
+{% endif %}
 ```
 ### Output:
 <img width="1124" alt="Screenshot 2023-04-10 at 11 28 19 PM" src="https://user-images.githubusercontent.com/122514456/230963481-c9d57217-f2cc-41f1-9a8f-46f99ef9294b.png">
