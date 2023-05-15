@@ -10,7 +10,7 @@ This is my DBT Assignment
 * Basically ```dbt init``` helps to set up a ```connection profile``` so that one can start working quickly.
 * It __prompts__ for each piece of information that __dbt needs__ to connect to that database: things like ```account```, ```user```, ```password```, etc
 * Eventually, it will __create__ a __folder__ with the necessary ```files and folders``` to get ```started```
-* Here I have used Snowflake database and provided the credential for the same while specifying information in dbt init.
+* Here Karan have used Snowflake database and provided the credential for the same while specifying information in dbt init.
 * All the details regarding the connection are stored in the default location is ```~/.dbt/profiles.yml```.
 
 ## Question 1 / Question 2 :
@@ -94,8 +94,8 @@ FROM seed_country_codes as cc, seed_item_prices_stg as ip
 
 #### Explanation:
 * Here After __creating__ the file, I have specified the ```sql script``` wherein I am using Two __CTEs__ to extract the data from both the csv files in     the ```STG schema``` and then extracted the required columns from both the tables and changed the __attributes__ name as per the expected output file       provided.
-* Above I am using ```jinja template``` for refering to the required file using ```ref()``` function.
-* Here we have been asked to use ```incremental dbt model``` so in the ```config``` I have specified the __materialized__ as ```incremental``` and I have   used the incremental strategy as ```merge``` and specified the unique keys which will be used by the ```merge``` to check for unique data, if data is     unique it will insert the data otherwise it will update the existing data.
+* Above Karan is using ```jinja template``` for refering to the required file using ```ref()``` function.
+* Here we have been asked to use ```incremental dbt model``` so in the ```config``` Karan have specified the __materialized__ as ```incremental``` and Karan have   used the incremental strategy as ```merge``` and specified the unique keys which will be used by the ```merge``` to check for unique data, if data is     unique it will insert the data otherwise it will update the existing data.
 * If unique key already exists in the destination table, merge will update the record, so you will not have duplicates. And if the records don’t exist       merge will insert them.
 
 #### For creating the ```CONS``` stage I have included the stage name in ```dbt_project.yml``` file under ```cons``` folder
