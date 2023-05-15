@@ -9,11 +9,10 @@ Country_code , Country_name
 ```
 dbt seed
 ```
-<img width="1440" alt="Screenshot 2023-04-10 at 11 05 59 PM" src="https://user-images.githubusercontent.com/122514456/230958434-04305495-87ea-44ba-b7c0-6334734e490a.png">
+<img width="1249" alt="Screenshot 2023-05-15 at 5 38 52 PM" src="https://github.com/akshaypratapsigmoid/DBT_ASSIGNMENT/assets/123646244/ca5a2834-7f67-45f4-888b-234751b0a3f8">
 
 ### Output:
-<img width="1124" alt="Screenshot 2023-04-10 at 11 20 53 PM" src="https://user-images.githubusercontent.com/122514456/230963386-4548800f-7bfe-4002-a6f4-81cce8e0b04a.png">
-
+<img width="1279" alt="Screenshot 2023-05-15 at 5 34 55 PM" src="https://github.com/akshaypratapsigmoid/DBT_ASSIGNMENT/assets/123646244/92cd7241-e57e-42b2-bafb-c04ea8a62108">
 
 
 ### 2) Load File data to stg
@@ -24,11 +23,10 @@ Version, Country_code, Country, Item_key, Item_name, year, month, price, user
 ```
 dbt seed
 ```
-<img width="1440" alt="Screenshot 2023-04-10 at 11 06 14 PM" src="https://user-images.githubusercontent.com/122514456/230958488-3295896c-77d4-4606-ad6a-d18b5c03c3f9.png">
+<img width="1249" alt="Screenshot 2023-05-15 at 5 38 58 PM" src="https://github.com/akshaypratapsigmoid/DBT_ASSIGNMENT/assets/123646244/e2e55387-a231-4840-97cc-d93186489a24">
 
 ### Output:
-<img width="1124" alt="Screenshot 2023-04-10 at 11 21 18 PM" src="https://user-images.githubusercontent.com/122514456/230963441-dd3e1710-bc88-4f8f-85f9-b65f29c9c443.png">
-
+<img width="1279" alt="Screenshot 2023-05-15 at 5 36 07 PM" src="https://github.com/akshaypratapsigmoid/DBT_ASSIGNMENT/assets/123646244/b643ef32-2a8a-47e0-aae2-1d3a55c2d6c8">
 
 
 ### 3) Create an incremental dbt model to load item prices to final prices based on file data loaded
