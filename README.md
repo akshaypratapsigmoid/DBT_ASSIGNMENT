@@ -73,4 +73,4 @@ select
 
 ```
 ### Output:
-<img width="1124" alt="Screenshot 2023-04-10 at 11 28 19 PM" src="https://user-images.githubusercontent.com/122514456/230963481-c9d57217-f2cc-41f1-9a8f-46f99ef9294b.png">
+<img width="1277" alt="Screenshot 2023-05-15 at 5 50 05 PM" src="https://github.com/akshaypratapsigmoid/DBT_ASSIGNMENT/assets/123646244/065441a1-e8f7-46dd-a8c4-2747d74a4394">
