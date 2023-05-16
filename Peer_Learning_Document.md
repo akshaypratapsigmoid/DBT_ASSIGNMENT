@@ -1,12 +1,63 @@
 # Peer_Learning_Document
 
+# Sarthak's Approach
+
+# 1) Load Country_code config using data provided
+Output table: COUNTRY_CODES in schema STG Country_code , Country_name
+
+### Solution:
+```
+dbt seed 
+```
+<img width="942" alt="Screenshot 2023-04-13 at 5 18 55 PM" src="https://user-images.githubusercontent.com/123497764/231749676-db640912-dea3-49ac-9354-5eec8b65a2cb.png">
+
+
+<img width="842" alt="Screenshot 2023-04-13 at 5 17 08 PM" src="https://user-images.githubusercontent.com/123497764/231749215-ea0de14d-7483-4ce7-96e5-889b4b4c42a0.png">
+
+# 2) Load File data to stg
+Output table : ITEM_PRICES_STG in schema STG Version, Country_code, Country, Item_key, Item_name, year, month, price, user
+
+### Solution:
+```
+dbt seed
+```
+<img width="1060" alt="Screenshot 2023-04-13 at 5 40 00 PM" src="https://user-images.githubusercontent.com/123497764/231754066-5285f6a0-cd8a-4694-828a-1afd03e84c09.png">
+
+
+<img width="1104" alt="Screenshot 2023-04-13 at 5 41 13 PM" src="https://user-images.githubusercontent.com/123497764/231754351-14b4b923-a6f5-46a0-babd-139e3592b0cf.png">
+
+# 3) Create an incremental dbt model to load item prices to final prices based on file data loaded
+Output table : ITEM_PRICES in schema CONS Version, Country_code, Country, Item_key, Item_name, year, month, price, user
+
+### Solution:
+```
+{{
+  config(
+    materialized = 'incremental',
+    incremental_strategy = 'merge',
+    unique_key = ['version', 'country_code', 'item_key', 'year', 'month', 'price', 'user'],
+    schema = 'CONS'
+    )
+}}
+
+with item_prices as (
+select 
+ips.version, cc.country_code, cc.country_name, ips.item_key, ips.item_name, ips.year, ips.month, ips.price, ips.user
+from country_codes as cc
+cross join item_prices_stg as ips
+)
+select * from item_prices
+```
+<img width="1111" alt="Screenshot 2023-04-13 at 5 45 57 PM" src="https://user-images.githubusercontent.com/123497764/231755392-4e6a2341-fab6-4eb3-9370-93774969c097.png">
+
+
 # Karan's Approach 
 
 This is my DBT Assignment
-#### Below I have explain the approach,defined the steps in complete detail for the questions needed and shown the output screenshot to my solution:
+#### Below Karan have explained the approach,defined the steps in complete detail for the questions needed and shown the output screenshot to his solution:
 
 ### Before starting with Questions:
-* Firstly before starting the project we initialized the folder with ```dbt init dbt_assignment``` command where __dbt_assignment__ is the project name in   my case
+* Firstly before starting the project he initialized the folder with ```dbt init dbt_assignment``` command where __dbt_assignment__ is the project name in his case
 * Basically ```dbt init``` helps to set up a ```connection profile``` so that one can start working quickly.
 * It __prompts__ for each piece of information that __dbt needs__ to connect to that database: things like ```account```, ```user```, ```password```, etc
 * Eventually, it will __create__ a __folder__ with the necessary ```files and folders``` to get ```started```
@@ -93,7 +144,7 @@ FROM seed_country_codes as cc, seed_item_prices_stg as ip
 ```
 
 #### Explanation:
-* Here After __creating__ the file, I have specified the ```sql script``` wherein I am using Two __CTEs__ to extract the data from both the csv files in     the ```STG schema``` and then extracted the required columns from both the tables and changed the __attributes__ name as per the expected output file       provided.
+* Here After __creating__ the file, Karan have specified the ```sql script``` wherein Karan is using Two __CTEs__ to extract the data from both the csv files in     the ```STG schema``` and then extracted the required columns from both the tables and changed the __attributes__ name as per the expected output file       provided.
 * Above Karan is using ```jinja template``` for refering to the required file using ```ref()``` function.
 * Here we have been asked to use ```incremental dbt model``` so in the ```config``` Karan have specified the __materialized__ as ```incremental``` and Karan have   used the incremental strategy as ```merge``` and specified the unique keys which will be used by the ```merge``` to check for unique data, if data is     unique it will insert the data otherwise it will update the existing data.
 * If unique key already exists in the destination table, merge will update the record, so you will not have duplicates. And if the records don’t exist       merge will insert them.
@@ -112,54 +163,3 @@ FROM seed_country_codes as cc, seed_item_prices_stg as ip
 ### Querying ```Item_prices``` data:
 
 <img width="1022" alt="Screenshot 2023-04-11 at 1 04 39 AM" src="https://user-images.githubusercontent.com/122456892/230982453-effa501b-0aa6-4589-91ba-c3e723571685.png">
-
-
-# Sarthak's Approach
-
-# 1) Load Country_code config using data provided
-Output table: COUNTRY_CODES in schema STG Country_code , Country_name
-
-### Solution:
-```
-dbt seed 
-```
-<img width="942" alt="Screenshot 2023-04-13 at 5 18 55 PM" src="https://user-images.githubusercontent.com/123497764/231749676-db640912-dea3-49ac-9354-5eec8b65a2cb.png">
-
-
-<img width="842" alt="Screenshot 2023-04-13 at 5 17 08 PM" src="https://user-images.githubusercontent.com/123497764/231749215-ea0de14d-7483-4ce7-96e5-889b4b4c42a0.png">
-
-# 2) Load File data to stg
-Output table : ITEM_PRICES_STG in schema STG Version, Country_code, Country, Item_key, Item_name, year, month, price, user
-
-### Solution:
-```
-dbt seed
-```
-<img width="1060" alt="Screenshot 2023-04-13 at 5 40 00 PM" src="https://user-images.githubusercontent.com/123497764/231754066-5285f6a0-cd8a-4694-828a-1afd03e84c09.png">
-
-
-<img width="1104" alt="Screenshot 2023-04-13 at 5 41 13 PM" src="https://user-images.githubusercontent.com/123497764/231754351-14b4b923-a6f5-46a0-babd-139e3592b0cf.png">
-
-# 3) Create an incremental dbt model to load item prices to final prices based on file data loaded
-Output table : ITEM_PRICES in schema CONS Version, Country_code, Country, Item_key, Item_name, year, month, price, user
-
-### Solution:
-```
-{{
-  config(
-    materialized = 'incremental',
-    incremental_strategy = 'merge',
-    unique_key = ['version', 'country_code', 'item_key', 'year', 'month', 'price', 'user'],
-    schema = 'CONS'
-    )
-}}
-
-with item_prices as (
-select 
-ips.version, cc.country_code, cc.country_name, ips.item_key, ips.item_name, ips.year, ips.month, ips.price, ips.user
-from country_codes as cc
-cross join item_prices_stg as ips
-)
-select * from item_prices
-```
-<img width="1111" alt="Screenshot 2023-04-13 at 5 45 57 PM" src="https://user-images.githubusercontent.com/123497764/231755392-4e6a2341-fab6-4eb3-9370-93774969c097.png">
