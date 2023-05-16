@@ -3,14 +3,15 @@
         materialized = 'incremental',
         schema = 'CONS',
         incremental_strategy = 'delete+insert',
+        unique_key =['Version','Country_Code','Item_key','Year','Month','Price','User']
     )
 }}
 
 with country_codes as (
-    select country_key, country_name, load_time from dbt_db.stg.country_codes
+    select country_key, country_name, load_time from dbtproj.stg.country_codes
 ),
 item_prices as (
-    select version, item_key, item_name, year, month, price, user, load_time from dbt_db.stg.item_prices_stg
+    select version, item_key, item_name, year, month, price, user, load_time from dbtproj.stg.item_prices_stg
 )
 
 
