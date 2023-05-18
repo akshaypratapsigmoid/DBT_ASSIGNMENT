@@ -40,7 +40,9 @@ Version, Country_code, Country, Item_key, Item_name, year, month, price, user
         materialized = 'incremental',
         schema = 'CONS',
         incremental_strategy = 'delete+insert',
-        unique_key =['Version','Country_Code','Item_key','Year','Month','Price','User']
+        unique_key =['Version','Country_Code','Item_key','Year','Month','User']
+
+
     )
 }}
 
