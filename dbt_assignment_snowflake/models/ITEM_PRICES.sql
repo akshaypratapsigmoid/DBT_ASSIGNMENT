@@ -3,7 +3,9 @@
         materialized = 'incremental',
         schema = 'CONS',
         incremental_strategy = 'delete+insert',
-        unique_key =['Version','Country_Code','Item_key','Year','Month','Price','User']
+        unique_key =['Version','Country_Code','Item_key','Year','Month','User']
+
+
     )
 }}
 
